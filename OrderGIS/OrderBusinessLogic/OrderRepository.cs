@@ -41,12 +41,6 @@ namespace OrderGIS.OrderBusinessLogic
             {
                 using var connection = _conectionFactory.CreateConnection();
 
-                //var response = (await connection.Query(
-                //    "sp_GetOrderById",
-                //    new { OrderId = orderId },
-                //    commandType: CommandType.StoredProcedure
-                //    )).SingleOrDefault();
-
                 var response = (await connection.QueryAsync(
                     "sp_GetOrderById",
                     new { OrderId = orderId },
