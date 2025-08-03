@@ -1,0 +1,28 @@
+﻿CREATE TABLE Customers (
+    CustomerId INT IDENTITY(1,1) PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    CreatedAt DATETIME2 DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TABLE GISAssets (
+    GISAssetId NVARCHAR(50) PRIMARY KEY,
+    Description NVARCHAR(255),
+    CreatedAt DATETIME2 DEFAULT SYSUTCDATETIME()
+);
+
+CREATE TYPE dbo.OrderStatusType AS TABLE (
+    Status NVARCHAR(50) NOT NULL PRIMARY KEY
+);
+
+CREATE TABLE Orders (
+    OrderId INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerId INT NOT NULL FOREIGN KEY REFERENCES Customers(CustomerId),
+    GISAssetId NVARCHAR(50) NOT NULL FOREIGN KEY REFERENCES GISAssets(GISAssetId),
+    Status NVARCHAR(50) NOT NULL,
+    CreatedAt DATETIME2 DEFAULT SYSUTCDATETIME(),
+    UpdatedAt DATETIME2 NULL
+);
+
+-- Seed some statuses (if needed)
+INSERT INTO Orders (CustomerId, GISAssetId, Status) VALUES (1, 'GIS001', 'Pending');
